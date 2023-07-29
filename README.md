@@ -1,6 +1,6 @@
 # DevJobz
 
-<b>A simple website for listing and finding Dev Jobs. This project is built using Laravel 10, Bootstrap 5, AlpineJS. It's functionality includes CRUD (create, read, update, delete) operations, filtering, pagination, authorization & authentication, form validations, file uploading, responsive alert notification, page routing, route middlewares. Only the registered users who logs in can post job listings while visitors can search and quick apply to job listings.</b>
+<h3><b>A simple website for listing and finding Dev Jobs. This project is built using <code>Laravel 10, Bootstrap 5, AlpineJS</code>. It's functionality includes CRUD (create, read, update, delete) operations, filtering, pagination, authorization & authentication, form validations, file uploading, responsive alert notification, page routing, route middlewares. Only the registered users who logs in can post job listings while visitors can search and quick apply to job listings.</b><h3>
 
 ![Alt text](/public/images/screen-1.png "DevJobz Screen 1")
 
