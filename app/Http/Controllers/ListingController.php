@@ -88,9 +88,9 @@ class ListingController extends Controller
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
             
             // Delete old uploaded logo inside the storage directory
-            if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
-                Storage::disk('public')->delete($listing->logo);
-            }
+            // if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
+            //     Storage::disk('public')->delete($listing->logo);
+            // }
         }
         
         $listing->update($formFields);

@@ -10,6 +10,8 @@ A simple website for listing and finding Dev Jobs. This project is built using L
 
 ![Alt text](/public/images/screen-4.png "DevJobz Screen 4")
 
+![Alt text](/public/images/screen-5.png "DevJobz Screen 5")
+
 ## Usage
 
 ### Database Setup
