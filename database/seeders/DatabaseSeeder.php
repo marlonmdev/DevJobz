@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'matrix@gmail.com'
         ]);
         
-        Listing::factory(8)->create([
+        Listing::factory(100)->create([
             'user_id' => $user->id
         ]);
 
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         // Listing::create([
         //     'title'       => 'Senior Laravel Developer',
         //     'tags'        => 'laravel, javascript',
-        //     'company'     => 'Acme Corp',
+        //     'company'     => 'PyCorp',
         //     'location'    => 'Cebu City, Cebu',
         //     'email'       => 'email1@email.com',
         //     'website'     => 'https://www.acme.com',

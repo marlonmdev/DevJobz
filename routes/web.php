@@ -36,8 +36,14 @@ Route::put('/listings/{listing}', [ListingController::class, 'update'])->middlew
 // Delete Job Listing
 Route::delete('/listings/{listing}', [ListingController::class, 'delete'])->middleware('auth');
 
-// Manage Listings
+// Manage Job Listings
 Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
+
+// View Job Listing Applicants
+Route::get('/listing/{id}/applicants', [ApplicantController::class, 'index'])->middleware('auth');
+
+// View Applicant Details
+Route::get('/applicant/{applicant}', [ApplicantController::class, 'show'])->middleware('auth');
 
 // Single Job Listing
 Route::get('/listing/{listing}', [ListingController::class, 'show']);

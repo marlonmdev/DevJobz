@@ -6,6 +6,7 @@ use App\Models\Listing;
 use App\Models\Applicants;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ListingController extends Controller
 {
@@ -18,9 +19,11 @@ class ListingController extends Controller
             $searchValue = request('search');
         }
         
+        $data = Listing::latest()->filter(request(['tag', 'search']))->paginate(10);
+        
         return view('listings.index', [
             'searchVal' => $searchValue,
-            'listings' => Listing::latest()->filter(request(['tag', 'search']))->paginate(10)
+            'listings' => $data
         ]); 
     }
     
@@ -39,12 +42,12 @@ class ListingController extends Controller
     // Store job listing
     public function store(Request $request){
         $formFields = $request->validate([
-            'title'         => ['required', 'min:3'],
+            'title'         => 'required|min:3',
             'salary'        => '',
-            'company'       =>  ['required', Rule::unique('listings', 'company')],
+            'company'       => 'required',
             'location'      => 'required',
             'website'       => 'required',
-            'email'         => ['required', 'email'],
+            'email'         => 'required|email',
             'tags'          => 'required',
             'description'   => 'required'
         ]);
@@ -78,7 +81,7 @@ class ListingController extends Controller
             'company'       => 'required',
             'location'      => 'required',
             'website'       => 'required',
-            'email'         => ['required', 'email'],
+            'email'         => 'required|email',
             'tags'          => 'required',
             'description'   => 'required'
         ]);
@@ -88,9 +91,9 @@ class ListingController extends Controller
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
             
             // Delete old uploaded logo inside the storage directory
-            // if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
-            //     Storage::disk('public')->delete($listing->logo);
-            // }
+            if($listing->logo && Storage::disk('public')->exists($listing->logo)) {
+                Storage::disk('public')->delete($listing->logo);
+            }
         }
         
         $listing->update($formFields);
@@ -127,13 +130,21 @@ class ListingController extends Controller
         
         // Assuming you have the logged-in user's ID, get their job listings with applicant count
         $user_id = auth()->user()->id;
+        
+        $search = request('search') ?? '';
+        
+        $per_page = 10;
 
         // Retrieve the job listings with the count of applicants using 'withCount'
-        $listings = Listing::where('user_id', $user_id)
+        $data = Listing::where('user_id', $user_id)
                         ->withCount('applicants')
-                        ->paginate(10);
+                        ->filter(request(['search']))
+                        ->paginate($per_page);
         
-        return view('listings.manage', ['listings' => $listings]);
+        return view('listings.manage', [
+            'search' => $search,
+            'listings' => $data
+        ]);
         
     }
     

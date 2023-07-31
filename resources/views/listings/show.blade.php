@@ -4,7 +4,12 @@
         
         <div class="container mt-5">
             <div class="mb-3">
-                <a class="text-secondary fs-4" href="#" onclick="history.back()">⬅ Go Back</a>
+                @auth
+                    <a href="#" class="btn btn-dark btn-rounded" onclick="history.back()"> &nbsp; GO BACK &nbsp;</a>
+                @else
+                    <a href="/" class="btn btn-dark btn-rounded"> &nbsp; GO BACK &nbsp;</a>
+                @endauth
+                
             </div>
             <div class="row">
                     
