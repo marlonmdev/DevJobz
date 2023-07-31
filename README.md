@@ -52,4 +52,8 @@ Place the project inside your document root (C:\xampp\htdocs\) and run
 php artisan serve
 ```
 
-or just type in the browser <code>localhost/devjobz/public</code> to access the site
+or run this command on the terminal if php artisan serve does not work
+
+```
+php -S localhost:8000 -t public/
+```
