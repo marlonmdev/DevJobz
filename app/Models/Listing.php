@@ -11,7 +11,10 @@ class Listing extends Model
 {
     use HasFactory;
     
+    protected $guarded = [];
+    
     protected $table = 'listings';
+    
     
     // uncomment this if Model::unguard is not set in function boot() in the AppServiceProvider file
     // protected $fillable = ['title', 'company', 'location', 'website', 'email', 'tags', 'description'];
@@ -39,12 +42,12 @@ class Listing extends Model
         return $this->hasMany(Applicant::class, 'listing_id');
     }
     
-    public function getListingApplicants(){
-        $results = Listing::join('applicants', 'listings.id', '=', 'applicants.listing_id')
-        ->select('listings.*', 'applicants.name')
-        ->get();
+    // public function getListingApplicants(){
+    //     $results = Listing::join('applicants', 'listings.id', '=', 'applicants.listing_id')
+    //     ->select('listings.*', 'applicants.name')
+    //     ->get();
         
-        return $results;
-    }
+    //     return $results;
+    // }
     
 }

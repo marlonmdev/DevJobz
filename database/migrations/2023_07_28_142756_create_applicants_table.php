@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('listing_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('email');
+            $table->string('name', 255);
+            $table->string('email', 50);
             $table->string('resume');
             $table->longText('message');
             $table->timestamps();

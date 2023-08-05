@@ -18,62 +18,70 @@ use App\Http\Controllers\ApplicantController;
 |
 */
 
-// All Job Listings
-Route::get('/', [ListingController::class, 'index']);
 
-// Show Create Job Listing Form
-Route::get('/listings/create', [ListingController::class, 'create'])->middleware('auth');
+Route::controller(UserController::class)->group(function() {
+    // Show Register Form
+    Route::get('/register', 'create')->middleware('guest');
+    // Store Registered User
+    Route::post('/users', 'store');
+    // Show Login Form
+    Route::get('/login', 'login')->name('login')->middleware('guest');
+    // Login User
+    Route::post('users/authenticate', 'authenticate');
+    // Show Change Password Form
+    Route::get('users/edit', 'edit')->middleware('auth');
+    // Show Change Password Form
+    Route::put('users/{user}', 'update')->middleware('auth');
+    // User Logout 
+    Route::post('/logout', 'logout');
+});
 
-// Store Job Listing
-Route::post('/listings', [ListingController::class, 'store'])->middleware('auth');
 
-// Show Edit Job Listing Form
-Route::get('/listings/{listing}/edit', [ListingController::class, 'edit'])->middleware('auth');
+Route::controller(ListingController::class)->group(function() {
+    // All Job Listings
+    Route::get('/', 'index');  
+    // Show Create Job Listing Form
+    Route::get('/listings/create', 'create')->middleware('auth');
+    // Store Job Listing
+    Route::post('/listings', 'store')->middleware('auth');
+    // Show Edit Job Listing Form
+    Route::get('/listings/{listing}/edit', 'edit')->middleware('auth');
+    // Update Job Listing
+    Route::put('/listings/{listing}', 'update')->middleware('auth');
+    // Delete Job Listing
+    Route::delete('/listings/{listing}', 'delete')->middleware('auth');
+    // Manage Job Listings
+    Route::get('/listings/manage', 'manage')->middleware('auth');
+    // Single Job Listing
+    Route::get('/listing/{listing}', 'show');
+});
 
-// Update Job Listing
-Route::put('/listings/{listing}', [ListingController::class, 'update'])->middleware('auth');
 
-// Delete Job Listing
-Route::delete('/listings/{listing}', [ListingController::class, 'delete'])->middleware('auth');
+Route::controller(ApplicantController::class)->group(function() {
+    // View Job Listing Applicants
+    Route::get('/listing/{id}/applicants', 'index')->middleware('auth');
+    // View Applicant Details
+    Route::get('/applicant/{applicant}', 'show')->middleware('auth');
+    // Show Apply Form
+    Route::get('/listing/{listing}/apply', 'create')->middleware('guest');
+    // Submit Application
+    Route::post('/applicant', 'store')->middleware('guest');
+});
 
-// Manage Job Listings
-Route::get('/listings/manage', [ListingController::class, 'manage'])->middleware('auth');
 
-// View Job Listing Applicants
-Route::get('/listing/{id}/applicants', [ApplicantController::class, 'index'])->middleware('auth');
 
-// View Applicant Details
-Route::get('/applicant/{applicant}', [ApplicantController::class, 'show'])->middleware('auth');
 
-// Single Job Listing
-Route::get('/listing/{listing}', [ListingController::class, 'show']);
 
-// Show Apply Form
-Route::get('/listing/{listing}/apply', [ApplicantController::class, 'create'])->middleware('guest');
 
-// Submit Application
-Route::post('/applicant', [ApplicantController::class, 'store'])->middleware('guest');
 
-// Show Register Form
-Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 
-// Store Registered User
-Route::post('/users', [UserController::class, 'store']);
 
-// Show Login Form
-Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
 
-// Login User
-Route::post('users/authenticate', [UserController::class, 'authenticate']);
 
-// Show Change Password Form
-Route::get('users/edit', [UserController::class, 'edit'])->middleware('auth');
 
-// Show Change Password Form
-Route::put('users/{user}', [UserController::class, 'update'])->middleware('auth');
 
-// User Logout 
-Route::post('/logout', [UserController::class, 'logout']);
+
+
 
 
 
